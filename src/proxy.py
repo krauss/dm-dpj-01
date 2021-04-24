@@ -1,6 +1,6 @@
 import json
 import re
-from .utils import get_ip_info
+from utils import get_ip_info
 from bs4 import Tag
 
 #-------------------------------------------------------------------------

@@ -8,6 +8,8 @@
 
 ### Setup
 
+Execute the commands below to setup the application according to your platform, Linux or Windows only.
+
 **prox_crapper** requires [Python 3.9+](https://www.python.org/downloads/)
 
 ```sh
@@ -15,11 +17,23 @@
 $ git clone https://github.com/krauss/prox_crapper.git
 
 # Change directory
-$ cd prox_crapper
+$ cd prox_crapper # Linux/Windows
+
+# Create a virtual environment
+$ python -m venv ./venv     # Linux
+$> python -m venv .\venv    # Windows
+
+# Activate the virtual environment
+$ source ./venv/bin/activate    # Linux
+$> .\venv\Scripts\activate      # Windows
 
 # Install prox_crapper dependencies
-$ pip install -e .
+$ pip install -r requirements.txt   # Linux/Windows
 
 # Run prox_crapper application
-$ prox_crapper
+$ python src/main.py    # Linux
+$> python src\main.py   # Windows
+
+# When you're done, to exit the virtual envirnoment:
+$ deactivate    # Linux/Windows
 ```
