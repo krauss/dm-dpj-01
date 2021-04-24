@@ -25,20 +25,30 @@ def exporter(proxy_list):
 def scrapper(proxy_list):
 
     for page in range(1, 8):
-        print(f'\nFetching page {page}')
-        if page == 1:
-            req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)
+        print(f'\nFetching page {page}')        
+        try:
+            if page == 1:
+                req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)
+            else:
+                req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/?page={page}', headers=HEADERS)
+
+        except ConnectionAbortedError:
+            print('Error: connection aborted')
+        except ConnectionRefusedError:
+            print('Error: connection refused')
+        except ConnectionResetError:
+            print('Error: connection reset')
+        except ConnectionError as conerr:
+            print('Error: connection error', conerr)
 
         else:
-            req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/?page={page}', headers=HEADERS)
+            if req.status_code == 200:
+                prx_soup = BeautifulSoup(bytes(req.content), features="html.parser")
+                proxy_list.add_proxy_list(prx_soup)
 
-        if req.status_code == 200:
-            prx_soup = BeautifulSoup(bytes(req.content), features="html.parser")
-            proxy_list.add_proxy_list(prx_soup)
-        
-        browsing_time = random.randint(4, 10)
-        print(f'Browsing page {page} for {browsing_time} secs')
-        time.sleep(browsing_time)
+            browsing_time = random.randint(4, 10)
+            print(f'Browsing page {page} for {browsing_time} secs')
+            time.sleep(browsing_time)
         
     print(f'\nProxies downloaded: {proxy_list.size}')
 
