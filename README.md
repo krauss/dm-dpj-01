@@ -4,7 +4,7 @@
 
 ### Description
 
-**prox_crapper** is a CLI application written in Python that extracts information about proxies from [this website](http://www.freeproxylists.net) and save them as a `json`
+**prox_crapper** is a CLI application written in Python that extracts information about proxies from [this website](http://www.freeproxylists.net) and save them as a `json` file in the [export](export/) folder
 
 ### Setup
 
@@ -17,14 +17,9 @@ $ git clone https://github.com/krauss/prox_crapper.git
 # Change directory
 $ cd prox_crapper
 
-# Install brazfoot_cli dependencies
+# Install prox_crapper dependencies
 $ pip install -e .
 
-# Run brazfoot_cli application
+# Run prox_crapper application
 $ prox_crapper
-$ prox_crapper --help  # to check the available command options 
 ```
-
-### Export folder
-
-The directory [export](export/) is where the files will be saved.
