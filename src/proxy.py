@@ -1,36 +1,76 @@
 import json
-from utils import decode_ipaddress
+import re
+from .utils import get_ip_info
 from bs4 import Tag
 
-class Proxy:
+#-------------------------------------------------------------------------
+#           ProxyList class
+#-------------------------------------------------------------------------
+class ProxyList:
 
-    def __init__(self, soup):
-        self._proxy_lsit = self._extract_proxy_list(soup)
+    def __init__(self):
+        self._proxy_list = []
 
-    #-------------------------------------------------------------------------
-    def _extract_proxy_list(self, soup):
-        '''Method gets a soup as argument and returns an array of dict'''
-        keys = {0: 'ip', 1: 'porta', 2: 'protocolo', 4: 'pais', 7: 'uptime'}
+    def add_proxy_list(self, soup):
+        '''Method gets a soup as argument and returns an array of dict'''   
+        data_grid = soup.find('table', class_='DataGrid')
 
-        data_grid = soup.find('table', class_='DataGrid').findAll('tr')
-
-        return [{keys[index]: (col.text if index != 0 else col.contents[0])for index, col in enumerate(line.findAll('td')) if index in (0,1,2,4,7)} for line in data_grid]
+        if data_grid:
+            for line in data_grid.findAll('tr', class_=re.compile('Odd|Even')):
+                values = line.findAll('td')        
+                if len(values) > 1:
+                    self.proxy_list.append(Proxy(values).get_proxy_dict()) 
 
     #-------------------------------------------------------------------------
     @property
     def proxy_list(self):
-        return self._proxy_lsit
+        return self._proxy_list
 
     #-------------------------------------------------------------------------
-    def get_proxy_json(self):
+    @property
+    def size(self):
+        return len(self._proxy_list)
+
+    #-------------------------------------------------------------------------
+    def get_proxy_list_json(self):
         '''Return a list of proxy object as a JSON'''
 
         return json.dumps(self.proxy_list, ensure_ascii=False, indent=4)
 
+
+#-------------------------------------------------------------------------
+#           Proxy class
+#-------------------------------------------------------------------------
+class Proxy:
+
+    def __init__(self, soup):
+        self._initialize(soup)
+
+    #-------------------------------------------------------------------------
+    def _initialize(self, soup):
+        '''Method gets a soup as argument and returns an array of dict'''
+        
+        for index, col in enumerate(soup):
+            if index == 0:
+                self.ip = get_ip_info(col.contents[0].string)
+            elif index == 1:                
+                self.porta = (col.text).strip()
+            elif index == 2:
+                self.protocolo = (col.text).strip()
+            elif index == 4:
+                self.pais = (col.text).strip()
+            elif index == 7:
+                self.uptime = (col.text).strip()
+
+    #-------------------------------------------------------------------------
+    def get_proxy_dict(self):
+        '''Return the proxy object as a dict'''
+        return self.__dict__
+
     #-------------------------------------------------------------------------
     def __str__(self):
-        return f"game_{self.competition_header['game']}"
+        return f"proxy_{self.ip}_{self.porta}"
 
     #-------------------------------------------------------------------------
     def __repr__(self):
-        return r"game_" + str(self.competition_header['game'])
+        return r"proxy_" + repr(self.ip+"_"+self.porta)

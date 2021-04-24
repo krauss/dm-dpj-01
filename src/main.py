@@ -1,64 +1,60 @@
 import time
-import click
 import os
-import csv
-from questionary import questionary, Choice
-from .proxy import Proxy
+import requests
+import random
+from .proxy import Proxy, ProxyList
+from .utils import timestamp_decorator, HEADERS
 from bs4 import BeautifulSoup
-from concurrent.futures import as_completed
-from requests_futures.sessions import FuturesSession
-
-#---------------------------------- Web Scrapping function
-def scrapper(proxyq):    
-    start_time = time.time()
-
-    print(f'\nFetching proxy data...')
-
-    with FuturesSession(max_workers=7) as session:
-        futures = [session.get(f'http://www.freeproxylists.net/?page={page}') for page in range(2, 3)]
-
-        for req in as_completed(futures):
-            if req.result().status_code == 200:
-                prox_soup = BeautifulSoup(bytes(req.result().content), features="lxml")
-                proxyq.append(Proxy(prox_soup))
 
 
-    stop_time = time.time()
-    print(f'Fetching finished in {stop_time-start_time:.3} sec')
+def exporter(proxy_list):
+    try:
+        with open(os.path.join(os.getcwd(), 'export', f'proxies.json'), 'w', encoding='utf-8') as json_file:
+            json_file.write(proxy_list.get_proxy_list_json())
+    except OSError as err:
+        print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
 
-#---------------------------------- Game processing function
-def dumper(proxyq):
-    start_time = time.time()
+    print(f"File proxies.json created in ./export/\n")
 
-    for game in proxyq:
-        try:
-            with open(os.path.join(os.getcwd(), 'export', f'proxy_list.json'), 'w', encoding='utf-8') as json_file:
-                json_file.write(game.get_game_json())
-        except OSError as err:
-            print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
 
-        print(f"File ./export/{game}.json saved!")
-    
+@timestamp_decorator
+def scrapper(proxy_list):
 
-    stop_time = time.time()
-    print(f'Saving finished in {stop_time-start_time:.3} sec')
+    for page in range(1, 8):
+        print(f'\nFetching page {page}')
+        if page == 1:
+            req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)
 
-#---------------------------------- 
-proxy_queue = []
+        else:
+            req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/?page={page}', headers=HEADERS)
 
-#---------------------------------- Main method
-#@click.command()
+        if req.status_code == 200:
+            prx_soup = BeautifulSoup(bytes(req.content), features="html.parser")
+            proxy_list.add_proxy_list(prx_soup)
+        
+        browsing_time = random.randint(4, 10)
+        print(f'Browsing page {page} for {browsing_time} secs')
+        time.sleep(browsing_time)
+        
+    print(f'\nProxies downloaded: {proxy_list.size}')
+
+
 def main():
-    """Proxy Scrapper - CLI"""
-    print("+", "-" * 30, "+")
-    print("|", " " * 30, "|")
-    print("|", "Proxy Scrapper - CLI".center(30), "|")
-    print("|", " " * 30, "|")
-    print("+", "-" * 30, "+\n")
-    
-    scrapper(proxy_queue, competition, str(division).lower(), season, sample, file_format)
-    dumper(proxy_queue, competition, str(division).lower(), season, sample, file_format)
+    print(" +", "-" * 30, "+")
+    print(" |", " " * 30, "|")
+    print(" |", "Proxy Scrapper - CLI".center(30), "|")
+    print(" |", " " * 30, "|")
+    print(" +", "-" * 30, "+\n")
+    print(' This CLI application scraps the site\n',
+        'below and generates a json file containing\n',
+        'one object per proxy entry.\n')
+    print(' -> https://www.freeproxylists.net/\n')
+    input(' Hit enter to start scrapping: ')
+    prx_lst = ProxyList()
+    scrapper(prx_lst)
+    exporter(prx_lst)
 
-#---------------------------------- Entry point
+
+#-------- Entry point
 if __name__ == '__main__':
     main()
