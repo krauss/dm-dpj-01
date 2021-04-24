@@ -8,8 +8,6 @@ setup(
     description="Proxy scrapper command-line interface (CLI) for SeniorUp Job Test",
     packages=find_packages(),
     install_requires=[
-        "click",
-        "questionary",
         "beautifulsoup4",
         "lxml",
         "requests_futures"
