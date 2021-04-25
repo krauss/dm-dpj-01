@@ -19,7 +19,7 @@ def exporter(proxy_list, order_key):
     except OSError as err:
         print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
 
-    print(f"File proxies.json created in ./export/\n")
+    print(f"File proxies.json created in {os.path.join(os.getcwd())}/export \n")
 
 
 @timestamp_decorator
