@@ -10,6 +10,8 @@ from questionary import questionary, Choice
 from proxy import Proxy, ProxyList
 from utils import timestamp_decorator, HEADERS, PROXY_IP_POOL
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 
 def exporter(proxy_list, order_key):
@@ -23,26 +25,15 @@ def exporter(proxy_list, order_key):
 
 
 @timestamp_decorator
-def scrapper(proxy_list, google_cache):
+def scrap_from_cache(proxy_list):
 
     for page in range(1, 8):
         print(f'\nFetching page {page}')
         try:
             if page == 1:
-                if google_cache:
-                    req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)
-                else:
-                    proxy = PROXY_IP_POOL[random.randint(0, 165)]
-                    req = requests.get(f'https://www.freeproxylists.net/', headers=HEADERS, proxies=proxy)
-                    time.sleep(random.randint(3, 9))
+                req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)                
             else:
-                if google_cache:
-                    req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/?page={page}', headers=HEADERS)
-                else:
-                    proxy = PROXY_IP_POOL[random.randint(0, 165)]
-                    req = requests.get(f'https://www.freeproxylists.net/?page={page}', headers=HEADERS, proxies=proxy)
-                    time.sleep(random.randint(3, 9))
-                
+                req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/?page={page}', headers=HEADERS)                                                    
         except ConnectionAbortedError:
             print('Error: connection aborted')
         except ConnectionRefusedError:
@@ -53,10 +44,41 @@ def scrapper(proxy_list, google_cache):
             print('Error: connection error', conerr)
         else:
             if req.status_code == 200:
-                prx_soup = BeautifulSoup(bytes(req.content), features="html.parser")
+                prx_soup = BeautifulSoup(bytes(req.content), features="lxml")
                 proxy_list.add_proxy_list(prx_soup)
         
     print(f'\nProxies downloaded: {proxy_list.size}')
+
+
+@timestamp_decorator
+def scrap_from_original(proxy_list):
+
+    options = webdriver.firefox.options.Options()
+    options.headless = True
+    driver = webdriver.Firefox(options=options)
+    driver.implicitly_wait(10)
+    try:
+        driver.get("https://www.freeproxylists.net/")
+    except Exception as ex:
+        print('Error: connection error ', ex)
+    else:
+        print(f'Fecthing data for home page...')
+        prx_soup = BeautifulSoup(driver.page_source, features="lxml")
+        proxy_list.add_proxy_list(prx_soup)
+
+        for page_index in range(2, 8):
+            pages_link_list = driver.find_element_by_class_name('page').find_elements_by_tag_name('a')
+            for page_tag in pages_link_list:
+                if page_tag.text == str(page_index):
+                    page_tag.click() # Click the next page <a> tag
+                    break
+            print(f'Fecthing data for page {page_index}...')
+            time.sleep(random.randint(3, 9))
+
+            prx_soup = BeautifulSoup(driver.page_source, features="lxml")
+            proxy_list.add_proxy_list(prx_soup)
+
+    
 
 order_key_list = [Choice('original'), Choice('país', value='pais'), Choice('uptime')]
 
@@ -75,7 +97,12 @@ def main():
     order_result = questionary.select(" Select the proxies' order key", choices=order_key_list).ask()
     input('\n Hit enter to start scrapping: ')
     prx_lst = ProxyList()
-    scrapper(prx_lst, google_cache)
+
+    if google_cache:
+        scrap_from_cache(prx_lst)
+    else:
+        scrap_from_original(prx_lst)
+
     exporter(prx_lst, order_result)
 
 #-------- Entry point
