@@ -8,7 +8,7 @@ import requests
 import random
 from questionary import questionary, Choice
 from proxy import Proxy, ProxyList
-from utils import timestamp_decorator, HEADERS, PROXY_IP_POOL
+from utils import timestamp_decorator, HEADERS
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
