@@ -39,13 +39,7 @@ class ProxyList:
             self.proxy_list.sort(key=lambda x: x[order_key])
 
         return json.dumps(self.proxy_list, ensure_ascii=False, indent=4)
-
-    #-------------------------------------------------------------------------
-    #def get_proxy_pool_list(self):
-    #    self.proxy_list.sort(key=lambda x: x['uptime'], reverse=True)
-
-    #    return [f"{prx_lst['protocolo'].lower()}://{prx_lst['ip']}:{prx_lst['porta']}" for prx_lst in self.proxy_list]
-
+        
 
 #-------------------------------------------------------------------------
 #           Proxy class
