@@ -6,15 +6,16 @@ import time
 import os
 import requests
 import random
+from questionary import questionary, Choice
 from proxy import Proxy, ProxyList
-from utils import timestamp_decorator, HEADERS
+from utils import timestamp_decorator, HEADERS, PROXY_IP_POOL
 from bs4 import BeautifulSoup
 
 
-def exporter(proxy_list):
+def exporter(proxy_list, order_key):
     try:
         with open(os.path.join(os.getcwd(), 'export', f'proxies.json'), 'w', encoding='utf-8') as json_file:
-            json_file.write(proxy_list.get_proxy_list_json())
+            json_file.write(proxy_list.get_proxy_list_json(order_key))
     except OSError as err:
         print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
 
@@ -22,16 +23,24 @@ def exporter(proxy_list):
 
 
 @timestamp_decorator
-def scrapper(proxy_list):
+def scrapper(proxy_list, google_cache):
 
     for page in range(1, 8):
-        print(f'\nFetching page {page}')        
+        print(f'\nFetching page {page}')
         try:
             if page == 1:
-                req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)
+                if google_cache:
+                    req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)
+                else:
+                    proxy = PROXY_IP_POOL[random.randint(0, 165)]
+                    req = requests.get(f'https://www.freeproxylists.net/', headers=HEADERS, proxies=proxy)            
             else:
-                req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/?page={page}', headers=HEADERS)
-
+                if google_cache:
+                    req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/?page={page}', headers=HEADERS)
+                else:
+                    proxy = PROXY_IP_POOL[random.randint(0, 165)]
+                    req = requests.get(f'https://www.freeproxylists.net/?page={page}', headers=HEADERS, proxies=proxy)
+                
         except ConnectionAbortedError:
             print('Error: connection aborted')
         except ConnectionRefusedError:
@@ -40,18 +49,14 @@ def scrapper(proxy_list):
             print('Error: connection reset')
         except ConnectionError as conerr:
             print('Error: connection error', conerr)
-
         else:
             if req.status_code == 200:
                 prx_soup = BeautifulSoup(bytes(req.content), features="html.parser")
                 proxy_list.add_proxy_list(prx_soup)
-
-            browsing_time = random.randint(4, 10)
-            print(f'Browsing page {page} for {browsing_time} secs')
-            time.sleep(browsing_time)
         
     print(f'\nProxies downloaded: {proxy_list.size}')
 
+order_key_list = [Choice('original'), Choice('país', value='pais'), Choice('uptime')]
 
 def main():
     print(" +", "-" * 30, "+")
@@ -59,15 +64,17 @@ def main():
     print(" |", "Proxy Scrapper - CLI".center(30), "|")
     print(" |", " " * 30, "|")
     print(" +", "-" * 30, "+\n")
-    print(' This CLI application scraps the site\n',
+    print(' This CLI application scraps the web site\n',
         'below and generates a json file containing\n',
-        'one object per proxy entry.\n')
+        'a list of proxy object.\n')
     print(' -> https://www.freeproxylists.net/\n')
-    input(' Hit enter to start scrapping: ')
-    prx_lst = ProxyList()
-    scrapper(prx_lst)
-    exporter(prx_lst)
 
+    google_cache = questionary.confirm(" Do you want to scrap from Google cached pages?").ask()
+    order_result = questionary.select(" Select the proxies' order key", choices=order_key_list).ask()
+    input('\n Hit enter to start scrapping: ')
+    prx_lst = ProxyList()
+    scrapper(prx_lst, google_cache)
+    exporter(prx_lst, order_result)
 
 #-------- Entry point
 if __name__ == '__main__':
