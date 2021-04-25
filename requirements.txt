@@ -1,5 +1,6 @@
 # These are the required packages for the application
 beautifulsoup4
+selenium
 lxml
 requests
 questionary

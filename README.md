@@ -10,11 +10,19 @@
 
 **prox_crapper** is a CLI application written in Python that extracts information about proxies from [this website](http://www.freeproxylists.net) and save them as a `json` file in the local [export](export/) folder.
 
+**prox_crapper** requires:
+- [Python 3.9+](https://www.python.org/downloads/)
+- [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases)
+- selenium (Seleninum library will not work without the geckodriver binary setup)
+- beautifulsoup4
+- lxml
+- requests
+- questionary
+
+
 ### Local Setup
 
 Execute the commands below to setup the application according to your platform; Linux or Windows only.
-
-**prox_crapper** requires [Python 3.9+](https://www.python.org/downloads/)
 
 #### Windows :tv:
 
@@ -66,7 +74,7 @@ $ python src/main.py
 $ deactivate
 ```
 
-### Docker Setup
+### Docker Setup :whale:
 
 Follow the step below in order to setup a docker container.
 
