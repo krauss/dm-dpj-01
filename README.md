@@ -1,8 +1,10 @@
 # prox_crapper
 
-[1. Description](#description)
-[2. Local Setup](#local-setup)
-[3. Docker Setup](#docker-setup)
+[**1. Description**](#description)
+
+[**2. Local Setup**](#local-setup)
+
+[**3. Docker Setup**](#docker-setup)
 
 ### Description
 
