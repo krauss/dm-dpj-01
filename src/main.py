@@ -33,13 +33,15 @@ def scrapper(proxy_list, google_cache):
                     req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)
                 else:
                     proxy = PROXY_IP_POOL[random.randint(0, 165)]
-                    req = requests.get(f'https://www.freeproxylists.net/', headers=HEADERS, proxies=proxy)            
+                    req = requests.get(f'https://www.freeproxylists.net/', headers=HEADERS, proxies=proxy)
+                    time.sleep(random.randint(3, 9))
             else:
                 if google_cache:
                     req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/?page={page}', headers=HEADERS)
                 else:
                     proxy = PROXY_IP_POOL[random.randint(0, 165)]
                     req = requests.get(f'https://www.freeproxylists.net/?page={page}', headers=HEADERS, proxies=proxy)
+                    time.sleep(random.randint(3, 9))
                 
         except ConnectionAbortedError:
             print('Error: connection aborted')
