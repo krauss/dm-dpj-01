@@ -13,7 +13,7 @@
 **prox_crapper** requires:
 - [Python 3.9+](https://www.python.org/downloads/)
 - [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases)
-- selenium (Seleninum library will not work without the geckodriver binary setup)
+- selenium (Seleninum library will not work without the [geckodriver binary setup](https://selenium-python.readthedocs.io/installation.html#drivers))
 - beautifulsoup4
 - lxml
 - requests
