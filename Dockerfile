@@ -1,10 +1,10 @@
-FROM python:3
+FROM fedora:latest
 
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN dnf -q install wget lbzip2  python3 python3-pip -y
 
 RUN wget -q -O firefox.tar.bz2 'https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US'
 
@@ -12,10 +12,12 @@ RUN tar -xf ./firefox.tar.bz2
 
 RUN ln -s /usr/src/app/firefox/firefox /usr/bin/firefox
 
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
 COPY ./lib/geckodriver /usr/bin/geckodriver
 
 RUN chmod +x /usr/bin/geckodriver
 
-CMD [ "python", "./src/main.py" ]
+CMD [ "python3", "./src/main.py" ]
