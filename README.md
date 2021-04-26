@@ -4,13 +4,19 @@
 
 **1. [Description](#description)**
 
-**2. [Local Setup](#local-setup)**
+**2. [Web Scrapping Approach](#web-scrapping-approach)**
 
-**3. [Docker Setup](#docker-setup)** 
+**3. [Local Setup](#local-setup)**
+
+**4. [Docker Setup](#docker-setup)** 
 
 ### Description
 
-**prox_crapper** is a CLI application written in Python that extracts information about proxies from [this website](http://www.freeproxylists.net) and save them as a `json` file in the local [export](export/) folder. Due to the web scrapping sensitivity nature of such web site, the chosen approach was to simulate a human behavior navigation pattern by opening requests thorugh a web browser client (selenium + geckodriver) and firing click events on page link (`<a>` tags) in order to extract information from the other pages of the web site.
+**Proxy Scrapper CLI** is a **c**ommand **l**ine **i**nterface application written in Python that extracts information about proxies from [this website](http://www.freeproxylists.net) and save them as a `json` file in the local [export](export/) folder. 
+
+### Web Scrapping Approach
+
+Due to the web scrapping sensitivity nature of such web site, the chosen approach was to simulate a human behavior navigation pattern by opening requests thorugh a web browser client (selenium + geckodriver) and firing click events on page link (`<a>` tags) in order to extract information from the other pages of the web site.
 
 **prox_crapper** requires:
 - [Python 3.9+](https://www.python.org/downloads/)
