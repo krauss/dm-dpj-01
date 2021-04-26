@@ -8,7 +8,7 @@
 
 **3. [Local Setup](#local-setup)**
 
-**4. [Docker Setup](#docker-setup)** 
+**4. [Docker Setup](#docker-setup-whale)** 
 
 ### Description
 
