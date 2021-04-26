@@ -85,6 +85,7 @@ $ deactivate
 ### Docker Setup :whale:
 
 Follow the step below in order to setup a docker container.
+*Obs: Although the containerized application works fine when scrapping from Google Cache, it still does **NOT** work properly when scrapping from the original site. It seems to be a problem with Firefox binary. Sorry, I'm working on it.*
 
 #### Linux :penguin:
 
@@ -103,8 +104,6 @@ $ docker run -it -v $PWD/export:/usr/src/app/export  prox_crapper
 
 ```
 #### Windows :tv: 
-
-Obs: Although the containerized application works fine when scrapping from Google Cache, it still does **NOT** work properly when scrapping from the original site. Sorry, I'm working on it.
 
 ```sh
 # Clone this repository:
