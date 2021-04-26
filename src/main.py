@@ -98,7 +98,7 @@ def main():
         'a list of proxy object.\n')
     print(' -> https://www.freeproxylists.net/\n')
 
-    google_cache = questionary.confirm(" Do you want to scrap from Google cached pages?").ask()
+    google_cache = questionary.confirm(" Do you want to scrap from Google Cache?").ask()
     order_result = questionary.select(" Select the proxies' order key", choices=order_key_list).ask()
     input('\n Hit enter to start scrapping: ')
     prx_lst = ProxyList()
