@@ -1,4 +1,6 @@
-# prox_crapper
+# _Proxy Scrapper CLI_
+
+## prox_crapper
 
 **1. [Description](#description)**
 
