@@ -73,12 +73,13 @@ def scrap_from_original(proxy_list):
                         page_tag.click() # Click the next page <a> tag
                         break
                     except Exception as ex:
-                        print('Error: problem on clicking the page element', ex)
+                        print('Warning: tiny problem on clicking the page element', ex)
             print(f'Fecthing data for page {page_index}...')
             driver.implicitly_wait(10)
             prx_soup = BeautifulSoup(driver.page_source, features="lxml")
             proxy_list.add_proxy_list(prx_soup)
 
+    print(f'\nProxies downloaded: {proxy_list.size}')
     
 
 order_key_list = [Choice('original'), Choice('país', value='pais'), Choice('uptime')]
