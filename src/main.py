@@ -25,8 +25,8 @@ def exporter(proxy_list, order_key):
 
 
 @timestamp_decorator
-def scrap_from_cache(proxy_list):
-
+def scrap_from_cache(proxy_list):  
+    print('\nWe aware that when fetching from Google cache, you might get stalled data.\n')  
     for page in range(1, 8):
         print(f'\nFetching page {page}')
         try:
@@ -73,7 +73,7 @@ def scrap_from_original(proxy_list):
                         page_tag.click() # Click the next page <a> tag
                         break
                     except Exception as ex:
-                        print('Warning: tiny problem on clicking the page element', ex)            
+                        print('Warning: tiny problem occured when clicking on the page element')    
             driver.implicitly_wait(10)
             print(f'Fecthing data for page {page_index}...')
             prx_soup = BeautifulSoup(driver.page_source, features="lxml")
@@ -82,7 +82,13 @@ def scrap_from_original(proxy_list):
     print(f'\nProxies downloaded: {proxy_list.size}')
     
 
-order_key_list = [Choice('original'), Choice('país', value='pais'), Choice('uptime')]
+order_key_list = [
+    Choice('original'), 
+    Choice('país', value='pais'), 
+    Choice('uptime'),
+    Choice('ip')
+]
+
 
 def main():
     print(" +", "-" * 30, "+")
