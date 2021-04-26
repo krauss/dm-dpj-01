@@ -20,6 +20,7 @@ Due to the web scrapping sensitivity nature of such web site, the chosen approac
 
 **prox_crapper** requires:
 - [Python 3.9+](https://www.python.org/downloads/)
+- Python venv (python3-venv package)
 - [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases) (*download the geckodriver according to your platform and save under `/usr/bin` for Linux or `%USERPROFILE%\AppData\Local\Programs\Python\Python39\Scripts\` for Windows. Make sure to give execution permission.*)
 - selenium (Seleninum library will not work without the [geckodriver binary setup](https://selenium-python.readthedocs.io/installation.html#drivers))
 - beautifulsoup4
@@ -33,6 +34,8 @@ Due to the web scrapping sensitivity nature of such web site, the chosen approac
 Execute the commands below to setup the application according to your platform; Linux or Windows only.
 
 #### Windows :tv:
+
+The following setup was successfully run on a Windows 10 Pro 64 bit machine
 
 ```sh
 # Clone this repository:
@@ -58,6 +61,8 @@ $> deactivate
 ```
 
 #### Linux :penguin:
+
+The following setup was successfully run on a Linux Fedora 33 64 bit machine
 
 ```sh
 # Clone this repository:
