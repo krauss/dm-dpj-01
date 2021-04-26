@@ -102,7 +102,9 @@ $ docker build -t prox_crapper .
 $ docker run -it -v $PWD/export:/usr/src/app/export  prox_crapper
 
 ```
-#### Windows :tv:
+#### Windows :tv: 
+
+Obs: Unfortunately, this application still does **not** work properly on Docker Desktop for Windows. Sorry, we're working on it.
 
 ```sh
 # Clone this repository:

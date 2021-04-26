@@ -2,16 +2,13 @@
 
 # main.py
 
-import time
 import os
 import requests
-import random
 from questionary import questionary, Choice
-from proxy import Proxy, ProxyList
+from proxy import ProxyList
 from utils import timestamp_decorator, HEADERS
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
 
 def exporter(proxy_list, order_key):

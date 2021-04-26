@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN mv ./lib/geckodriver /usr/bin/geckodriver
+COPY ./lib/geckodriver /usr/bin/geckodriver
 
 RUN chmod +x /usr/bin/geckodriver
 
