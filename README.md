@@ -94,3 +94,18 @@ $ docker build -t prox_crapper .
 $ docker run -it -v $PWD/export:/usr/src/app/export  prox_crapper
 
 ```
+#### Windows :tv:
+
+```sh
+# Clone this repository:
+$> git clone https://github.com/krauss/prox_crapper.git
+
+# Change directory
+$> cd prox_crapper
+
+# Build the Docker container
+$> docker build -t prox_crapper .
+
+# Run it
+$> docker run -it -v %USERPROFILE%\export:/usr/src/app/export  prox_crapper
+```

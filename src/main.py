@@ -55,14 +55,13 @@ def scrap_from_original(proxy_list):
 
     options = webdriver.firefox.options.Options()
     options.headless = True
-    driver = webdriver.Firefox(options=options)
-    driver.implicitly_wait(10)
-    try:
-        driver.get("https://www.freeproxylists.net/")
-    except Exception as ex:
-        print('Error: connection error ', ex)
-    else:
+    with webdriver.Firefox(options=options) as driver:
+        try:
+            driver.get("https://www.freeproxylists.net/")
+        except Exception as ex:
+            print('Error: connection error ', ex)        
         print(f'Fecthing data for home page...')
+
         prx_soup = BeautifulSoup(driver.page_source, features="lxml")
         proxy_list.add_proxy_list(prx_soup)
 
@@ -70,11 +69,13 @@ def scrap_from_original(proxy_list):
             pages_link_list = driver.find_element_by_class_name('page').find_elements_by_tag_name('a')
             for page_tag in pages_link_list:
                 if page_tag.text == str(page_index):
-                    page_tag.click() # Click the next page <a> tag
-                    break
+                    try:
+                        page_tag.click() # Click the next page <a> tag
+                        break
+                    except Exception as ex:
+                        print('Error: problem on clicking the page element', ex)
             print(f'Fecthing data for page {page_index}...')
-            time.sleep(random.randint(3, 9))
-
+            driver.implicitly_wait(10)
             prx_soup = BeautifulSoup(driver.page_source, features="lxml")
             proxy_list.add_proxy_list(prx_soup)
 
