@@ -12,7 +12,7 @@
 
 **prox_crapper** requires:
 - [Python 3.9+](https://www.python.org/downloads/)
-- [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases)
+- [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases) *download the geckodriver according to your platform and save under `/usr/bin` for Linux or `%USERPROFILE%\AppData\Local\Programs\Python\Python39\Scripts\` for Windows. Make sure to give execution permission.
 - selenium (Seleninum library will not work without the [geckodriver binary setup](https://selenium-python.readthedocs.io/installation.html#drivers))
 - beautifulsoup4
 - lxml
@@ -90,7 +90,7 @@ $ cd prox_crapper
 # Build the Docker container
 $ docker build -t prox_crapper .
 
-# Run it
+# Run the container specifying a volume for the json file
 $ docker run -it -v $PWD/export:/usr/src/app/export  prox_crapper
 
 ```
@@ -106,6 +106,6 @@ $> cd prox_crapper
 # Build the Docker container
 $> docker build -t prox_crapper .
 
-# Run it
+# Run the container specifying a volume (-v %USERPROFILE%\export) for the json file
 $> docker run -it -v %USERPROFILE%\export:/usr/src/app/export  prox_crapper
 ```
