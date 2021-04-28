@@ -1,6 +1,6 @@
 # These are the required packages for the application
 beautifulsoup4
-selenium
+selenium==3.141
 lxml
 requests
 questionary
