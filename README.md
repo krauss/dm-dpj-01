@@ -18,11 +18,12 @@
 
 Due to the web scrapping sensitivity nature of such web site, the chosen approach was to simulate a human behavior navigation pattern by opening requests thorugh a web browser client (selenium + geckodriver) and firing click events on page link (`<a>` tags) in order to extract information from the other pages of the web site.
 
-**prox_crapper** requires:
+**prox_crapper**, when setup locally, requires the following dependencies:
 - [Python 3.9+](https://www.python.org/downloads/)
+- [Firefox](https://www.mozilla.org/en-US/firefox/all/#product-desktop-release)
 - Python venv (python3-venv package)
 - [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases) (*download the geckodriver according to your platform and save under `/usr/bin` for Linux or `%USERPROFILE%\AppData\Local\Programs\Python\Python39\Scripts\` for Windows. Make sure to give execution permission.*)
-- selenium (Seleninum library will not work without the [geckodriver binary setup](https://selenium-python.readthedocs.io/installation.html#drivers))
+- selenium (this library will not work without the [geckodriver binary setup](https://selenium-python.readthedocs.io/installation.html#drivers))
 - beautifulsoup4
 - lxml
 - requests
@@ -90,7 +91,6 @@ $ deactivate
 ### Docker Setup :whale:
 
 Follow the step below in order to setup a docker container.
-*Obs: Although the containerized application works fine when scrapping from Google Cache, it still does **NOT** work properly when scrapping from the original site. It seems to be a problem with Firefox binary. Sorry, I'm working on it.*
 
 #### Linux :penguin:
 
