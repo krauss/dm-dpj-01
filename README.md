@@ -2,13 +2,13 @@
 
 ## prox_crapper
 
-**1. [Description](#description)**
+**[1. Description](#description)**
 
-**2. [Web Scrapping Approach](#web-scrapping-approach)**
+**[2. Web Scrapping Approach](#web-scrapping-approach)**
 
-**3. [Local Setup](#local-setup)**
+**[3. Local Setup](#local-setup)**
 
-**4. [Docker Setup](#docker-setup-whale)** 
+**[4. Docker Setup](#docker-setup-whale)** 
 
 ### Description
 
@@ -21,13 +21,8 @@ Due to the web scrapping sensitivity nature of such web site, the chosen approac
 **prox_crapper**, when setup locally, requires the following dependencies:
 - [Python 3.9+](https://www.python.org/downloads/)
 - [Firefox](https://www.mozilla.org/en-US/firefox/all/#product-desktop-release)
-- Python venv (python3-venv package)
-- [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases) (*download the geckodriver according to your platform and save under `/usr/bin` for Linux or `%USERPROFILE%\AppData\Local\Programs\Python\Python39\Scripts\` for Windows. Make sure to give execution permission.*)
-- selenium (this library will not work without the [geckodriver binary setup](https://selenium-python.readthedocs.io/installation.html#drivers))
-- beautifulsoup4
-- lxml
-- requests
-- questionary
+- [Python venv](https://docs.python.org/3/library/venv.html)
+- [Firefox geckodriver](https://github.com/mozilla/geckodriver/releases) (*download the geckodriver according to your platform and save it under `/usr/bin` for Linux machine or `%USERPROFILE%\AppData\Local\Programs\Python\Python39\Scripts\` for Windows machine. To further reading: [geckodriver binary setup](https://selenium-python.readthedocs.io/installation.html#drivers))
 
 
 ### Local Setup
