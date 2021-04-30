@@ -16,7 +16,7 @@
 
 ### Web Scrapping Approach
 
-Due to the web scrapping sensitivity nature of such web site, the chosen approach was to simulate a human behavior navigation pattern by opening requests thorugh a web browser client (selenium + geckodriver) and firing click events on page link (`<a>` tags) in order to extract information from the other pages of the web site.
+Due to the web scrapping sensitivity nature of such web site, the chosen approach was to simulate a human navigation pattern by opening requests through a web browser client (selenium + geckodriver) and firing click events on page links (`<a>` tags) in order to extract information from the other pages of the web site.
 
 **prox_crapper**, when setup locally, requires the following dependencies:
 - [Python 3.9+](https://www.python.org/downloads/)
