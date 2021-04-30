@@ -63,7 +63,11 @@ def scrap_from_original(proxy_list):
         prx_soup = BeautifulSoup(driver.page_source, features="lxml")
         proxy_list.add_proxy_list(prx_soup)
 
-        for page_index in range(2, 8):
+        page_qty = len(driver.find_element_by_class_name('page').find_elements_by_tag_name('a'))
+
+        print(f"\nPages found: {page_qty}\n")
+
+        for page_index in range(2, (page_qty + 1)):
             pages_link_list = driver.find_element_by_class_name('page').find_elements_by_tag_name('a')
             for page_tag in pages_link_list:
                 if page_tag.text == str(page_index):
@@ -71,7 +75,7 @@ def scrap_from_original(proxy_list):
                         page_tag.click() # Click the next page <a> tag
                         break
                     except Exception as ex:
-                        print('Warning! <a> element may not be clickable') 
+                        print('Warning! <a> tag may not be clickable') 
 
             driver.implicitly_wait(10)
             print(f'Fecthing data for page {page_index}...')
