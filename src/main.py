@@ -11,10 +11,10 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
-def exporter(proxy_list, order_key):
+def exporter(proxy_list, sorting_key):
     try:
         with open(os.path.join(os.getcwd(), 'export', f'proxies.json'), 'w', encoding='utf-8') as json_file:
-            json_file.write(proxy_list.get_proxy_list_json(order_key))
+            json_file.write(proxy_list.get_proxy_list_json(sorting_key))
     except OSError as err:
         print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
 
@@ -71,7 +71,7 @@ def scrap_from_original(proxy_list):
                         page_tag.click() # Click the next page <a> tag
                         break
                     except Exception as ex:
-                        print('Warning!', ex) 
+                        print('Warning! <a> element may not be clickable') 
 
             driver.implicitly_wait(10)
             print(f'Fecthing data for page {page_index}...')
@@ -81,7 +81,7 @@ def scrap_from_original(proxy_list):
     print(f'\nProxies downloaded: {proxy_list.size}')
     
 
-order_key_list = [
+sorting_key_list = [
     Choice('original order', value='original'), 
     Choice('país', value='pais'), 
     Choice('uptime'),
@@ -97,11 +97,11 @@ def main():
     print(" +", "-" * 30, "+\n")
     print(' This CLI application scraps the web site\n',
         'below and generates a json file containing\n',
-        'a list of proxy object.\n')
+        'a list of proxy objects.\n')
     print(' -> https://www.freeproxylists.net/\n')
 
     google_cache = questionary.confirm(" Do you want to scrap from Google Cache?").ask()
-    order_result = questionary.select(" Select the order key", choices=order_key_list).ask()
+    sort_result = questionary.select(" Select the sorting key", choices=sorting_key_list).ask()
     input('\n Hit enter to start scrapping: ')
     prx_lst = ProxyList()
 
@@ -110,7 +110,7 @@ def main():
     else:
         scrap_from_original(prx_lst)
 
-    exporter(prx_lst, order_result)
+    exporter(prx_lst, sort_result)
 
 #-------- Entry point
 if __name__ == '__main__':

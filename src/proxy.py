@@ -38,7 +38,9 @@ class ProxyList:
         if order_key != 'original':
             if order_key == 'uptime':
                 self.proxy_list.sort(key=lambda x: x[order_key], reverse=True)
-            self.proxy_list.sort(key=lambda x: x[order_key])
+                
+            else:
+                self.proxy_list.sort(key=lambda x: x[order_key])
 
         return json.dumps(self.proxy_list, ensure_ascii=False, indent=4)
         
