@@ -11,14 +11,25 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 
 
-def exporter(proxy_list, sorting_key):
-    try:
-        with open(os.path.join(os.getcwd(), 'export', f'proxies.json'), 'w', encoding='utf-8') as json_file:
-            json_file.write(proxy_list.get_proxy_list_json(sorting_key))
-    except OSError as err:
-        print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
+def exporter(proxy_list, sorting_key, file_format):
 
-    print(f"File proxies.json created in {os.path.join(os.getcwd())}/export \n")
+    if file_format == 'json':
+        try:
+            with open(os.path.join(os.getcwd(), 'export', 'proxies.json'), 'w', encoding='utf-8') as json_file:
+                json_file.write(proxy_list.get_proxy_list_json(sorting_key))
+        except OSError as err:
+            print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
+    else:
+        try:
+            proxy_list.get_proxy_list_xml(sorting_key).write(
+                                                os.path.join(os.getcwd(), 'export', 'proxies.xml'), 
+                                                encoding='utf-8', 
+                                                method='xml', 
+                                                xml_declaration=True)
+        except OSError as err:
+            print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
+
+    print(f"File proxies.{file_format} created in {os.path.join(os.getcwd())}/export \n")
 
 
 @timestamp_decorator
@@ -92,6 +103,11 @@ sorting_key_list = [
     Choice('ip')
 ]
 
+file_format_list = [
+    Choice('json'),
+    Choice('xml')
+]
+
 
 def main():
     print(" +", "-" * 30, "+")
@@ -106,6 +122,7 @@ def main():
 
     google_cache = questionary.confirm(" Do you want to scrap from Google Cache?").ask()
     sort_result = questionary.select(" Select the sorting key", choices=sorting_key_list).ask()
+    file_format = questionary.select(" Select the file format", choices=file_format_list).ask()
     input('\n Hit enter to start scrapping: ')
     prx_lst = ProxyList()
 
@@ -114,7 +131,7 @@ def main():
     else:
         scrap_from_original(prx_lst)
 
-    exporter(prx_lst, sort_result)
+    exporter(prx_lst, sort_result, file_format)
 
 #-------- Entry point
 if __name__ == '__main__':

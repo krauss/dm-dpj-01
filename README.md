@@ -12,13 +12,13 @@
 
 ### Description
 
-**Proxy Scrapper CLI** is a **c**ommand **l**ine **i**nterface application written in Python that extracts information about proxies from [this website](http://www.freeproxylists.net) and save them as a `json` file in the local [export](export/) folder. 
+**Proxy Scrapper CLI** is a **c**ommand **l**ine **i**nterface application written in Python that extracts information about proxies from [this website](http://www.freeproxylists.net) and save them as a `json` or `xml` file in the local [export](export/) folder. 
 
 ### Web Scrapping Approach
 
 Due to the web scrapping sensitivity nature of such web site, the chosen approach was to simulate a human navigation pattern by opening requests through a web browser client (selenium + geckodriver) and firing click events on page links (`<a>` tags) in order to extract information from the other pages of the web site.
 
-**prox_crapper**, when setup locally, requires the following dependencies:
+**prox_crapper**, when set locally, requires the following dependencies:
 - [Python 3.9+](https://www.python.org/downloads/)
 - [Firefox](https://www.mozilla.org/en-US/firefox/all/#product-desktop-release)
 - [Python venv](https://docs.python.org/3/library/venv.html)

@@ -1,6 +1,7 @@
 import json
 import re
 from utils import get_ip_info
+from xml.etree import ElementTree as ET
 from bs4 import Tag
 
 #-------------------------------------------------------------------------
@@ -33,7 +34,7 @@ class ProxyList:
 
     #-------------------------------------------------------------------------
     def get_proxy_list_json(self, order_key):
-        '''Return a list of proxy object as a JSON order by the order_key param''' 
+        '''Return a list of proxy object as a JSON ordered by the order_key param''' 
 
         if order_key != 'original':
             if order_key == 'uptime':
@@ -43,6 +44,33 @@ class ProxyList:
                 self.proxy_list.sort(key=lambda x: x[order_key])
 
         return json.dumps(self.proxy_list, ensure_ascii=False, indent=4)
+    
+    #-------------------------------------------------------------------------
+    def get_proxy_list_xml(self, sorting_key):        
+        '''Return a list of proxy object as a XML ordered by the sorting_key param''' 
+
+        if sorting_key != 'original':
+            if sorting_key == 'uptime':
+                self.proxy_list.sort(key=lambda x: x[sorting_key], reverse=True)
+                
+            else:
+                self.proxy_list.sort(key=lambda x: x[sorting_key])
+
+        plist = ET.Element('plist')
+        for entry in self.proxy_list:
+            prx = ET.SubElement(plist, 'proxy')
+            ip = ET.SubElement(prx, 'ip')
+            ip.text = entry['ip']
+            porta = ET.SubElement(prx, 'porta')
+            porta.text = entry['porta']
+            protocolo = ET.SubElement(prx, 'protocolo')
+            protocolo.text = entry['protocolo']
+            pais = ET.SubElement(prx, 'pais')
+            pais.text = entry['pais']
+            uptime = ET.SubElement(prx, 'uptime')
+            uptime.text = entry['uptime']
+
+        return ET.ElementTree(plist)
         
 
 #-------------------------------------------------------------------------
