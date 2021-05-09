@@ -69,14 +69,12 @@ def scrap_from_original(proxy_list):
         except Exception as ex:
             print('Error: connection error ', ex)  
 
-        print(f'Fecthing data for home page...')
+        print(f'Fecthing proxy data...')
 
         prx_soup = BeautifulSoup(driver.page_source, features="lxml")
         proxy_list.add_proxy_list(prx_soup)
 
         page_qty = len(driver.find_element_by_class_name('page').find_elements_by_tag_name('a'))
-
-        print(f"\nPages found: {page_qty}\n")
 
         for page_index in range(2, (page_qty + 1)):
             pages_link_list = driver.find_element_by_class_name('page').find_elements_by_tag_name('a')
@@ -86,15 +84,12 @@ def scrap_from_original(proxy_list):
                         page_tag.click() # Click the next page <a> tag
                         break
                     except Exception as ex:
-                        print('Warning! <a> tag may not be clickable') 
+                        pass
 
-            driver.implicitly_wait(10)
-            print(f'Fecthing data for page {page_index}...')
             prx_soup = BeautifulSoup(driver.page_source, features="lxml")
             proxy_list.add_proxy_list(prx_soup)
 
     print(f'\nProxies downloaded: {proxy_list.size}')
-    
 
 sorting_key_list = [
     Choice('original order', value='original'), 
@@ -107,7 +102,6 @@ file_format_list = [
     Choice('json'),
     Choice('xml')
 ]
-
 
 def main():
     print(" +", "-" * 30, "+")
