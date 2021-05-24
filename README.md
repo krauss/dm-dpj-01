@@ -33,88 +33,82 @@ Execute the commands below to setup the application according to your platform; 
 
 The following setup was successfully run on a Windows 10 Pro 64 bit machine
 
+* Clone this repository:
 ```sh
-# Clone this repository:
-$> git clone https://github.com/krauss/prox_crapper.git
-
-# Change directory
-$> cd prox_crapper
-
-# Create a virtual environment
-$> python -m venv .\venv
-
-# Activate the virtual environment
-$> .\venv\Scripts\activate
-
-# Install prox_crapper dependencies
-$> pip install -r requirements.txt
-
-# Run prox_crapper application
-$> python src\main.py
-
-# When you're done, to exit the virtual envirnoment:
-$> deactivate
+git clone https://github.com/krauss/prox_crapper.git
+```
+* Change directory:
+```sh
+cd prox_crapper
+```
+* Create a virtual environment:
+```sh
+python -m venv .\venv
+```
+* Activate the virtual environment:
+```sh
+.\venv\Scripts\activate
+```
+* Install prox_crapper dependencies:
+```sh
+pip install -r requirements.txt
+```
+* Run prox_crapper application:
+```sh
+python src\main.py
+```
+* When you're done, to exit the virtual envirnoment:
+```sh
+deactivate
 ```
 
 #### Linux :penguin:
 
 The following setup was successfully run on a Linux Fedora 33 64 bit machine
 
+* Clone this repository:
 ```sh
-# Clone this repository:
-$ git clone https://github.com/krauss/prox_crapper.git
-
-# Change directory
-$ cd prox_crapper
-
-# Create a virtual environment
-$ python -m venv ./venv
-
-# Activate the virtual environment
-$ source ./venv/bin/activate
-
-# Install prox_crapper dependencies
-$ pip install -r requirements.txt
-
-# Run prox_crapper application
-$ python src/main.py
-
-# When you're done, to exit the virtual envirnoment:
-$ deactivate
+git clone https://github.com/krauss/prox_crapper.git
+```
+* Change directory:
+```sh
+cd prox_crapper
+```
+* Create a virtual environment:
+```sh
+python -m venv ./venv
+```
+* Activate the virtual environment:
+```sh
+source ./venv/bin/activate
+```
+* Install prox_crapper dependencies:
+```sh
+pip install -r requirements.txt
+```
+* Run prox_crapper application:
+```sh
+python src/main.py
+```
+* When you're done, to exit the virtual envirnoment:
+```sh
+deactivate
 ```
 
 ### Docker Setup :whale:
 
-Follow the step below in order to setup a docker container.
+In order to quickly try this out, follow the steps below to download our docker image and run it:
 
-#### Linux :penguin:
-
+* Download the image from Docker Hub
 ```sh
-# Clone this repository:
-$ git clone https://github.com/krauss/prox_crapper.git
-
-# Change directory
-$ cd prox_crapper
-
-# Build the Docker container
-$ docker build -t prox_crapper .
-
-# Run the container specifying a volume for the json file
-$ docker run -it -v $PWD/export:/usr/src/app/export  prox_crapper
-
+docker pull jrkrauss/prox_crapper:latest
 ```
-#### Windows :tv: 
-
+* Run the container specifying a volume for the resulting json file | LINUX :penguin:
 ```sh
-# Clone this repository:
-$> git clone https://github.com/krauss/prox_crapper.git
+docker run -it -v $PWD/export:/usr/src/app/export  jrkrauss/prox_crapper:latest
+```
+* Run the container specifying a volume for the resulting json file | WINDOWS :tv: 
+```sh
+docker run -it -v %USERPROFILE%\export:/usr/src/app/export  jrkrauss/prox_crapper:latest 
 
-# Change directory
-$> cd prox_crapper
-
-# Build the Docker container
-$> docker build -t prox_crapper .
-
-# Run the container specifying a volume (-v %USERPROFILE%\export) for the json file
-$> docker run -it -v %USERPROFILE%\export:/usr/src/app/export  prox_crapper
 ```
