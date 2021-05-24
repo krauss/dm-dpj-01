@@ -52,5 +52,5 @@ def timestamp_decorator(func):
         func(*args, **kwargs)        
 
         end = time.time()
-        print(f'Finished in {end-start:.3} secs')
+        print(f' Finished in {end-start:.3} secs')
     return wrapper

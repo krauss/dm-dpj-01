@@ -29,14 +29,14 @@ def exporter(proxy_list, sorting_key, file_format):
         except OSError as err:
             print(f'Error: permission error {os.strerror(err.errno)}, stack_trace: {err.with_traceback()}')
 
-    print(f"File proxies.{file_format} created in {os.path.join(os.getcwd())}/export \n")
+    print(f" File proxies.{file_format} created in {os.path.join(os.getcwd())}/export \n")
 
 
 @timestamp_decorator
 def scrap_from_cache(proxy_list):  
     print('\nBe aware that when fetching from Google cache, you might get stale data.\n')  
     for page in range(1, 8):
-        print(f'\nFetching page {page}')
+        print(f'\n Fetching page {page}')
         try:
             if page == 1:
                 req = requests.get(f'http://webcache.googleusercontent.com/search?q=cache:https://www.freeproxylists.net/', headers=HEADERS)                
@@ -55,7 +55,7 @@ def scrap_from_cache(proxy_list):
                 prx_soup = BeautifulSoup(bytes(req.content), features="lxml")
                 proxy_list.add_proxy_list(prx_soup)
         
-    print(f'\nProxies downloaded: {proxy_list.size}')
+    print(f'\n Proxies downloaded: {proxy_list.size}')
 
 
 @timestamp_decorator
@@ -69,7 +69,7 @@ def scrap_from_original(proxy_list):
         except Exception as ex:
             print('Error: connection error ', ex)  
 
-        print(f'Fecthing proxy data...')
+        print(f' \nFecthing proxy data')
 
         prx_soup = BeautifulSoup(driver.page_source, features="lxml")
         proxy_list.add_proxy_list(prx_soup)
@@ -89,7 +89,7 @@ def scrap_from_original(proxy_list):
             prx_soup = BeautifulSoup(driver.page_source, features="lxml")
             proxy_list.add_proxy_list(prx_soup)
 
-    print(f'\nProxies downloaded: {proxy_list.size}')
+    print(f'\n Proxies downloaded: {proxy_list.size}')
 
 sorting_key_list = [
     Choice('original order', value='original'), 
@@ -114,7 +114,7 @@ def main():
         'a list of proxy objects.\n')
     print(' -> https://www.freeproxylists.net/\n')
 
-    google_cache = questionary.confirm(" Do you want to scrap from Google Cache?").ask()
+    google_cache = questionary.confirm(" Scrap from Google Cache?").ask()
     sort_result = questionary.select(" Select the sorting key", choices=sorting_key_list).ask()
     file_format = questionary.select(" Select the file format", choices=file_format_list).ask()
     input('\n Hit enter to start scrapping: ')
