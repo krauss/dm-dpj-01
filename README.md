@@ -103,11 +103,11 @@ In order to quickly try this out, follow the steps below to download our docker 
 ```sh
 docker pull jrkrauss/prox_crapper:latest
 ```
-* Run the container specifying a volume for the resulting json file | LINUX :penguin:
+* Run the container specifying a volume for the resulting json file --> Linux :penguin:
 ```sh
 docker run -it -v $PWD/export:/usr/src/app/export  jrkrauss/prox_crapper:latest
 ```
-* Run the container specifying a volume for the resulting json file | WINDOWS :tv: 
+* Run the container specifying a volume for the resulting json file --> Windows :tv: 
 ```sh
 docker run -it -v %USERPROFILE%\export:/usr/src/app/export  jrkrauss/prox_crapper:latest 
 
