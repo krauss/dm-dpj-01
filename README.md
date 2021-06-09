@@ -97,18 +97,18 @@ deactivate
 
 ### Docker Setup :whale:
 
-In order to quickly try this out, follow the steps below to download our docker image and run it:
+In order to quickly try this out, follow the steps below to build the container and run it:
 
-* Download the image from Docker Hub
+* Build the container using the Dockerfile file provided
 ```sh
-docker pull jrkrauss/prox_crapper:latest
+docker build -t prox_crapper .
 ```
-* Run the container specifying a volume for the resulting json file --> Linux :penguin:
+* [ Linux ] Run the container specifying a volume for the resulting json file
 ```sh
-docker run -it -v $PWD/export:/usr/src/app/export  jrkrauss/prox_crapper:latest
+docker run -it -v $PWD/export:/usr/src/app/export  prox_crapper
 ```
-* Run the container specifying a volume for the resulting json file --> Windows :tv: 
+* [ Windows ] Run the container specifying a volume for the resulting json file
 ```sh
-docker run -it -v %USERPROFILE%\export:/usr/src/app/export  jrkrauss/prox_crapper:latest 
+docker run -it -v %USERPROFILE%\export:/usr/src/app/export  prox_crapper
 
 ```
