@@ -31,7 +31,7 @@ Execute the commands below to setup the application according to your platform; 
 
 #### Windows :tv:
 
-The following setup was successfully run on a Windows 10 Pro 64 bit machine
+The following setup was successfully run on a Windows 10 Pro 64-bit machine
 
 * Clone this repository:
 ```sh
@@ -43,7 +43,7 @@ cd prox_crapper
 ```
 * Create a virtual environment:
 ```sh
-python -m venv .\venv
+python -m venv venv
 ```
 * Activate the virtual environment:
 ```sh
@@ -57,14 +57,14 @@ pip install -r requirements.txt
 ```sh
 python src\main.py
 ```
-* When you're done, to exit the virtual envirnoment:
+* When you're done, to exit the virtual environment:
 ```sh
 deactivate
 ```
 
 #### Linux :penguin:
 
-The following setup was successfully run on a Linux Fedora 33 64 bit machine
+The following setup was successfully run on a Linux Fedora 33 64-bit machine
 
 * Clone this repository:
 ```sh
@@ -76,11 +76,11 @@ cd prox_crapper
 ```
 * Create a virtual environment:
 ```sh
-python -m venv ./venv
+python -m venv venv
 ```
 * Activate the virtual environment:
 ```sh
-source ./venv/bin/activate
+source venv/bin/activate
 ```
 * Install prox_crapper dependencies:
 ```sh
@@ -103,11 +103,11 @@ In order to quickly try this out, follow the steps below to build the container 
 ```sh
 docker build -t prox_crapper .
 ```
-* [ Linux ] Run the container specifying a volume for the resulting json file
+* **[ Linux ]** Run the container specifying a volume for the resulting json file
 ```sh
 docker run -it -v $PWD/export:/usr/src/app/export  prox_crapper
 ```
-* [ Windows ] Run the container specifying a volume for the resulting json file
+* **[ Windows ]** Run the container specifying a volume for the resulting json file
 ```sh
 docker run -it -v %USERPROFILE%\export:/usr/src/app/export  prox_crapper
 
