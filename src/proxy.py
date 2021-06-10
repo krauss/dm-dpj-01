@@ -61,12 +61,12 @@ class ProxyList:
             prx = ET.SubElement(plist, 'proxy')
             ip = ET.SubElement(prx, 'ip')
             ip.text = entry['ip']
-            porta = ET.SubElement(prx, 'porta')
-            porta.text = entry['porta']
-            protocolo = ET.SubElement(prx, 'protocolo')
-            protocolo.text = entry['protocolo']
-            pais = ET.SubElement(prx, 'pais')
-            pais.text = entry['pais']
+            port = ET.SubElement(prx, 'port')
+            port.text = entry['port']
+            protocol = ET.SubElement(prx, 'protocol')
+            protocol.text = entry['protocol']
+            country = ET.SubElement(prx, 'country')
+            country.text = entry['country']
             uptime = ET.SubElement(prx, 'uptime')
             uptime.text = entry['uptime']
 
@@ -89,11 +89,11 @@ class Proxy:
             if index == 0:
                 self.ip = get_ip_info(col.contents[0].string)
             elif index == 1:                
-                self.porta = (col.text).strip()
+                self.port = (col.text).strip()
             elif index == 2:
-                self.protocolo = (col.text).strip()
+                self.protocol = (col.text).strip()
             elif index == 4:
-                self.pais = (col.text).strip()
+                self.country = (col.text).strip()
             elif index == 7:
                 self.uptime = (col.text).strip()
 
@@ -104,8 +104,8 @@ class Proxy:
 
     #-------------------------------------------------------------------------
     def __str__(self):
-        return f"proxy_{self.ip}_{self.porta}"
+        return f"proxy_{self.ip}_{self.port}"
 
     #-------------------------------------------------------------------------
     def __repr__(self):
-        return r"proxy_" + repr(self.ip+"_"+self.porta)
+        return r"proxy_" + repr(self.ip+"_"+self.port)

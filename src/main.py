@@ -93,7 +93,7 @@ def scrap_from_original(proxy_list):
 
 sorting_key_list = [
     Choice('original order', value='original'), 
-    Choice('país', value='pais'), 
+    Choice('country', value='country'), 
     Choice('uptime'),
     Choice('ip')
 ]
