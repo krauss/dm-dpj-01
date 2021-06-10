@@ -1,16 +1,9 @@
 [
     {
         "ip": "41.229.253.214",
-        "porta": "8080",
-        "protocolo": "HTTP",
-        "pais": "Tunisia",
+        "port": "8080",
+        "protocol": "HTTP",
+        "country": "Tunisia",
         "uptime": "59.6%"
-    },
-    {
-        "ip": "47.254.90.125",
-        "porta": "8888",
-        "protocolo": "HTTPS",
-        "pais": "Canada",
-        "uptime": "31.8%"
     }
 ]
